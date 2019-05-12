@@ -43,6 +43,7 @@ class PhotoListVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround()
         configSearchBar() 
         configCollectionView()
         downloadService.downloadsSession = downloadsSession
@@ -249,6 +250,7 @@ extension PhotoListVC : UISearchBarDelegate{
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         getImageList(searchBar.text ?? "" )
+        searchBar.resignFirstResponder()
     }
     
     
