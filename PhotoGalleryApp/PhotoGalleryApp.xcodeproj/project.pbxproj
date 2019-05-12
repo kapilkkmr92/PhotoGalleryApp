@@ -15,7 +15,7 @@
 		4A3D467F2287307B0046DC61 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3D467D2287307B0046DC61 /* ImageCell.swift */; };
 		4A3D46802287307B0046DC61 /* ImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A3D467E2287307B0046DC61 /* ImageCell.xib */; };
 		4A3D46832287597F0046DC61 /* ImageListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3D46822287597F0046DC61 /* ImageListModel.swift */; };
-		4A3D468622875BC00046DC61 /* OnBoardingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3D468522875BC00046DC61 /* OnBoardingService.swift */; };
+		4A3D468622875BC00046DC61 /* NetworkCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3D468522875BC00046DC61 /* NetworkCall.swift */; };
 		4A3D468922875BD10046DC61 /* URLRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3D468722875BD10046DC61 /* URLRouter.swift */; };
 		4A3D468A22875BD10046DC61 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3D468822875BD10046DC61 /* NetworkManager.swift */; };
 		4A3D468D228769230046DC61 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3D468C228769230046DC61 /* Extensions.swift */; };
@@ -35,7 +35,7 @@
 		4A3D467D2287307B0046DC61 /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
 		4A3D467E2287307B0046DC61 /* ImageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageCell.xib; sourceTree = "<group>"; };
 		4A3D46822287597F0046DC61 /* ImageListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListModel.swift; sourceTree = "<group>"; };
-		4A3D468522875BC00046DC61 /* OnBoardingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OnBoardingService.swift; path = PhotoGalleryApp/OnBoardingService.swift; sourceTree = SOURCE_ROOT; };
+		4A3D468522875BC00046DC61 /* NetworkCall.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkCall.swift; path = PhotoGalleryApp/NetworkCall.swift; sourceTree = SOURCE_ROOT; };
 		4A3D468722875BD10046DC61 /* URLRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = URLRouter.swift; path = PhotoGalleryApp/URLRouter.swift; sourceTree = SOURCE_ROOT; };
 		4A3D468822875BD10046DC61 /* NetworkManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetworkManager.swift; path = PhotoGalleryApp/NetworkManager.swift; sourceTree = SOURCE_ROOT; };
 		4A3D468C228769230046DC61 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -120,7 +120,7 @@
 			children = (
 				4A3D468822875BD10046DC61 /* NetworkManager.swift */,
 				4A3D468722875BD10046DC61 /* URLRouter.swift */,
-				4A3D468522875BC00046DC61 /* OnBoardingService.swift */,
+				4A3D468522875BC00046DC61 /* NetworkCall.swift */,
 				4A3D4690228788D20046DC61 /* DownloadManager.swift */,
 			);
 			path = Networks;
@@ -209,7 +209,7 @@
 				4A3D469322878A400046DC61 /* DownloadModel.swift in Sources */,
 				4A3D468922875BD10046DC61 /* URLRouter.swift in Sources */,
 				4A3D4691228788D20046DC61 /* DownloadManager.swift in Sources */,
-				4A3D468622875BC00046DC61 /* OnBoardingService.swift in Sources */,
+				4A3D468622875BC00046DC61 /* NetworkCall.swift in Sources */,
 				4A3D466C2287296E0046DC61 /* PhotoListVC.swift in Sources */,
 				4A3D468F22876EA20046DC61 /* PreviewImageVC.swift in Sources */,
 				4A3D468D228769230046DC61 /* Extensions.swift in Sources */,

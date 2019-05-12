@@ -10,30 +10,64 @@ import UIKit
 
 class PhotoListVC: UIViewController {
 
+    // Activity Indicator
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var activityIndicatorHeight: NSLayoutConstraint!
+    // Collection View inset
     fileprivate let sectionInsets = UIEdgeInsets(top: 10.0 , left: 10.0, bottom: 10.0, right: 10.0)
-    fileprivate var itemsPerRow: CGFloat = 1
+    fileprivate var itemsPerRow: CGFloat = 2
     @IBOutlet weak var collectionView: UICollectionView!
+    // Search bar
     lazy var searchBar:UISearchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: 200, height: 20))
+    // Image data
     var imageListData = [Item]()
+    // Instance of Image Download Manager
     let downloadService = DownloadManager()
-    var cache : NSCache<AnyObject, AnyObject>!
+    // Local path
     let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+    // Url session
     lazy var downloadsSession: URLSession = {
         //    let configuration = URLSessionConfiguration.default
         let configuration = URLSessionConfiguration.background(withIdentifier: "bgSessionConfiguration")
         return URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
     }()
+    // For Image count
+    var downloadCnt = 0{
+        didSet{
+            DispatchQueue.main.async() {
+                self.activityIndicatorHeight.constant = (self.downloadCnt == 0) ? 0 : 40
+                self.activityIndicator.isHidden = (self.downloadCnt == 0) ? true : false
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.cache = NSCache()
+        configSearchBar() 
+        configCollectionView()
+        downloadService.downloadsSession = downloadsSession
+        activityIndicatorHeight.constant = 0
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+    }
+    
+    func configCollectionView()
+    {
         collectionView.delegate = self
         collectionView.dataSource = self
-        downloadService.downloadsSession = downloadsSession
         let nib = UINib(nibName: "ImageCell", bundle: nil)
         self.collectionView.register(nib, forCellWithReuseIdentifier: "ImageCell")
-        getImageList("cat")
-        
+    }
+    
+    func configSearchBar(){
+        searchBar = UISearchBar()
+        searchBar.sizeToFit()
+        searchBar.delegate = self
+        navigationItem.titleView = searchBar
     }
    
     func localFilePath(for url: URL) -> URL {
@@ -72,17 +106,26 @@ class PhotoListVC: UIViewController {
     }
     
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        searchBar = UISearchBar()
-        searchBar.sizeToFit()
-        searchBar.delegate = self
-        navigationItem.titleView = searchBar
-    }
     
+    func createLabelForNoResult() -> UIView
+    {
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: collectionView.bounds.size.width, height: collectionView.bounds.size.height))
+        label.center = CGPoint(x: 160, y: 285)
+        label.textAlignment = .center
+        if imageListData.count == 0
+        {
+            label.text = "No result found"
+        }else
+        {
+            label.text = ""
+        }
+        
+        return label
+    }
+    //MARK:- Network Call
     func getImageList(_ text :  String){
         let extendedUrl = "\(text)&;tagmode=any&format=json&nojsoncallback=1"
-        OnBoardingService<ImageListModel>.sendAPIRequest(requestType: RequestType.imageListUrl, header: nil,extendedUrl: extendedUrl) { (response) in
+        NetworkCall<ImageListModel>.sendAPIRequest(requestType: RequestType.imageListUrl, header: nil,extendedUrl: extendedUrl) { (response) in
             switch response {
             case .success(let result):
                 self.imageListData =  result?.items ?? []
@@ -95,13 +138,29 @@ class PhotoListVC: UIViewController {
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()
                 }
-                
-//                self.categoryListData = result
-                
+
             case .failed( _, _):
-                print("Error")
+                self.showMessage("Error in getting the imagelist")
             }
         }
+    }
+    
+    private func showMessage(_ msg : String)
+    {
+        let alert = UIAlertController(title: "", message: msg, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+            switch action.style{
+            case .default:
+                print("default")
+                
+            case .cancel:
+                print("cancel")
+                
+            case .destructive:
+                print("destructive")
+                
+            }}))
+        self.present(alert, animated: true, completion: nil)
     }
 
 }
@@ -109,6 +168,7 @@ class PhotoListVC: UIViewController {
 
 extension PhotoListVC : UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
     func numberOfSections(in collectionView: UICollectionView) -> Int {
+        self.collectionView.backgroundView = self.createLabelForNoResult()
         return 1
     }
     
@@ -122,6 +182,7 @@ extension PhotoListVC : UICollectionViewDelegate,UICollectionViewDataSource,UICo
         let item = imageListData[indexPath.row]
         if item.localUrl == ""{
             downloadService.startDownload(item)
+            downloadCnt = downloadCnt + 1
             cell.imageView.image = UIImage(named: "Dummy")
         }
         else{
@@ -169,11 +230,8 @@ extension PhotoListVC : UICollectionViewDelegate,UICollectionViewDataSource,UICo
 extension PhotoListVC : UISearchBarDelegate{
     
     func searchBarIsEmpty() -> Bool {
-        
         return searchBar.text?.isEmpty ?? true
-        
     }
-    
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar)
     {
@@ -219,8 +277,8 @@ extension PhotoListVC : URLSessionDownloadDelegate{
         } catch let error {
             print("Could not copy file to disk: \(error.localizedDescription)")
         }
+        downloadCnt = downloadCnt - 1
         download?.image.localUrl = destinationURL.absoluteString
-//        print(download?.image.index)
         if let index = download?.image.index {
             DispatchQueue.main.async {
                 self.collectionView.reloadItems(at: [IndexPath(row: index, section: 0)])

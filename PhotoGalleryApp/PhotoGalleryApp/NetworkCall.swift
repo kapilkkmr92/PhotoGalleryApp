@@ -1,10 +1,3 @@
-//
-//  OnBoardingService.swift
-//  eReturns
-//
-//  Created by Kapil on 17/10/18.
-//  Copyright © 2018 SAP. All rights reserved.
-//
 
 import Foundation
 import UIKit
@@ -16,8 +9,7 @@ typealias JSON = [String: Any]
 
 
 
-struct OnBoardingService<ResponseType: Codable> {
-    
+struct NetworkCall<ResponseType: Codable> {
     
     @discardableResult
     static func sendAPIRequest(requestType: RequestType, header: HTTPHeader? = nil, extendedUrl : String? = nil, completionHandler: CompletionHandler<ResponseType>? = nil) -> URLSessionTask {
@@ -74,7 +66,3 @@ struct OnBoardingService<ResponseType: Codable> {
 }
 }
 
-//extension CodingUserInfoKey {
-//
-//    static let managedObjectContext = CodingUserInfoKey(rawValue: "managedObjectContext")
-//}

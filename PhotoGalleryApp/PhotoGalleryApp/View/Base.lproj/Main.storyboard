@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="yeL-Tp-EG2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="yeL-Tp-EG2">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -29,13 +29,30 @@
                                 </collectionViewFlowLayout>
                                 <cells/>
                             </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b86-6w-674">
+                                <rect key="frame" x="0.0" y="637" width="375" height="30"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="Bw4-a8-6wD">
+                                        <rect key="frame" x="177.5" y="5" width="20" height="20"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="Bw4-a8-6wD" firstAttribute="centerX" secondItem="b86-6w-674" secondAttribute="centerX" id="Yht-QD-sVY"/>
+                                    <constraint firstItem="Bw4-a8-6wD" firstAttribute="centerY" secondItem="b86-6w-674" secondAttribute="centerY" id="ZGS-DA-646"/>
+                                    <constraint firstAttribute="height" constant="30" id="l5U-ry-mGg"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="qij-mc-ezm" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="0ic-Qf-KNw"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="b86-6w-674" secondAttribute="bottom" id="IAH-mS-xoK"/>
+                            <constraint firstItem="b86-6w-674" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="LTm-da-Qt1"/>
                             <constraint firstItem="qij-mc-ezm" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="ddV-6p-WSu"/>
                             <constraint firstItem="qij-mc-ezm" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="fQ3-c5-vSn"/>
                             <constraint firstItem="qij-mc-ezm" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="hGL-cT-iHZ"/>
+                            <constraint firstItem="b86-6w-674" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="yRd-XO-3yI"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -47,6 +64,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="activityIndicator" destination="Bw4-a8-6wD" id="nM0-aP-DRh"/>
+                        <outlet property="activityIndicatorHeight" destination="l5U-ry-mGg" id="OXA-7n-Ekr"/>
                         <outlet property="collectionView" destination="qij-mc-ezm" id="YbO-tH-XZj"/>
                     </connections>
                 </viewController>

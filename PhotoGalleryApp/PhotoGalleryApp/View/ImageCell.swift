@@ -16,7 +16,5 @@ class ImageCell: UICollectionViewCell {
         // Initialization code
     }
 
-    
-    
 }
 
