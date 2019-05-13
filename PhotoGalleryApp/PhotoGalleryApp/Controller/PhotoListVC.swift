@@ -116,7 +116,13 @@ class PhotoListVC: UIViewController {
         label.textAlignment = .center
         if imageListData.count == 0
         {
-            label.text = "No result found"
+            if searchBar.text == ""{
+                label.text = "Please search something..."
+            }
+            else{
+                label.text = "No result found"
+            }
+            
         }else
         {
             label.text = ""
