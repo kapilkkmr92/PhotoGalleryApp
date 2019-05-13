@@ -41,6 +41,7 @@ class PhotoListVC: UIViewController {
         }
     }
     
+    var alert : UIAlertController?
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
@@ -125,8 +126,14 @@ class PhotoListVC: UIViewController {
     }
     //MARK:- Network Call
     func getImageList(_ text :  String){
+        showLoader("Please wait ...")
         let extendedUrl = "\(text)&;tagmode=any&format=json&nojsoncallback=1"
         NetworkCall<ImageListModel>.sendAPIRequest(requestType: RequestType.imageListUrl, header: nil,extendedUrl: extendedUrl) { (response) in
+            DispatchQueue.main.async {
+                self.hideLoader()
+                self.searchBar.endEditing(true)
+                self.searchBar.resignFirstResponder()
+            }
             switch response {
             case .success(let result):
                 self.imageListData =  result?.items ?? []
@@ -164,6 +171,24 @@ class PhotoListVC: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
 
+    func showLoader(_ msg : String){
+        alert = UIAlertController(title: nil, message: msg , preferredStyle: .alert)
+        
+        let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
+        loadingIndicator.hidesWhenStopped = true
+        loadingIndicator.style = UIActivityIndicatorView.Style.gray
+        loadingIndicator.startAnimating();
+        if let alert = alert{
+            alert.view.addSubview(loadingIndicator)
+            present(alert, animated: true, completion: nil)
+        }
+        
+    }
+    
+    func hideLoader(){
+        alert?.dismiss(animated: false, completion: nil)
+    }
+    
 }
 
 
@@ -250,7 +275,7 @@ extension PhotoListVC : UISearchBarDelegate{
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         getImageList(searchBar.text ?? "" )
-        searchBar.resignFirstResponder()
+        
     }
     
     
