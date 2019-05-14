@@ -164,14 +164,17 @@ class PhotoListVC: UIViewController {
         let alert = UIAlertController(title: "", message: msg, preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
             switch action.style{
-            case .default:
-                print("default")
-                
+           
             case .cancel:
                 print("cancel")
                 
             case .destructive:
                 print("destructive")
+                
+            case .default:
+                print("default")
+            @unknown default:
+                print("default")
                 
             }}))
         self.present(alert, animated: true, completion: nil)
